@@ -4,7 +4,7 @@ namespace Baldeweg\Bundle\ApiBundle;
 
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
-class Serializer
+class Serializer implements SerializerInterface
 {
     public function serialize($entity, array $fields): array
     {
