@@ -12,11 +12,15 @@ class Serializer implements SerializerInterface
 
         $object = [];
         foreach ($fields as $field) {
-            $value = $propertyAccessor->getValue($entity, $field);
-            if ($value instanceof \DateTime) {
-                $value = $value->getTimestamp();
-            }
-            $object[$this->transformFieldName($field)] = $value;
+            $item = explode(':', $field);
+
+            $property = $this->transformFieldName($item[0]);
+            $value = $this->transformValue(
+                isset($item[1]) ? $item[1] : null,
+                $propertyAccessor->getValue($entity, $item[0])
+            );
+
+            $object[$property] = $value;
         }
 
         return $object;
@@ -25,5 +29,19 @@ class Serializer implements SerializerInterface
     private function transformFieldName(string $field): string
     {
         return str_replace('.', '_', $field);
+    }
+
+    private function transformValue(?string $type = null, mixed $value = null): mixed
+    {
+        if('timestamp' === $type) {
+            if ($value instanceof \DateTime) {
+                $value = $value->getTimestamp();
+            }
+        }
+        if('count' === $type) {
+            $value = count($value);
+        }
+
+        return $value;
     }
 }

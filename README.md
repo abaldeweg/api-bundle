@@ -31,7 +31,7 @@ There is also an abstract controller to give you access to these features within
 use Baldeweg\Bundle\ApiBundle\AbstractApiController;
 
 // Must be set, contains the keys of the entity you need
-protected $fields = ['id', 'name', 'user.id'];
+protected $fields = ['id', 'name', 'user.id', 'createdAt:timestamp', 'comments:count'];
 
 // JSON Response with serialized data
 $this->response($genre); // array
@@ -45,3 +45,7 @@ $this->deleted(); // Return message and 200 status code
 // Parse the data from the request and make them available to the form
 $this->submitForm($request)
 ```
+
+You can transform the values, just add a transformer after the field name e.g. `comments:count`.
+
+At the moment only count and timestamp are available.
