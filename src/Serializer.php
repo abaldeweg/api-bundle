@@ -16,9 +16,14 @@ class Serializer implements SerializerInterface
             if ($value instanceof \DateTime) {
                 $value = $value->getTimestamp();
             }
-            $object[$field] = $value;
+            $object[$this->transformFieldName($field)] = $value;
         }
 
         return $object;
+    }
+
+    private function transformFieldName(string $field): string
+    {
+        return str_replace('.', '_', $field);
     }
 }
