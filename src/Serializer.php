@@ -33,12 +33,10 @@ class Serializer implements SerializerInterface
 
     private function transformValue(?string $type = null, mixed $value = null): mixed
     {
-        if('timestamp' === $type) {
-            if ($value instanceof \DateTime) {
-                $value = $value->getTimestamp();
-            }
+        if ('timestamp' === $type && $value instanceof \DateTime) {
+            $value = $value->getTimestamp();
         }
-        if('count' === $type) {
+        if ('count' === $type) {
             $value = count($value);
         }
 
