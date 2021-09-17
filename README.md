@@ -30,17 +30,14 @@ There is also an abstract controller to give you access to these features within
 ```php
 use Baldeweg\Bundle\ApiBundle\AbstractApiController;
 
-// Must be set, contains the keys of the entity you need
-protected $fields = ['id', 'name', 'user.id', 'createdAt:timestamp', 'comments:count'];
+// Contains the keys of the entity you need
+private $fields = ['id', 'name', 'user.id', 'createdAt:timestamp', 'comments:count'];
 
 // JSON Response with serialized data
-$this->response($genre); // array
-$this->response($this->serialize($genre)); // single entity
-$this->response($this->serializeCollection($genre)); // array of entities
-
-// Responses
-$this->invalid(); // Return message and 400 status code
-$this->deleted(); // Return message and 200 status code
+$this->setResponse()->single($genre); // single entity
+$this->setResponse()->collection($genres); // array of entities
+$this->setResponse()->invalid(); // Return message and 400 status code
+$this->setResponse()->deleted(); // Return message and 200 status code
 
 // Parse the data from the request and make them available to the form
 $this->submitForm($request)
