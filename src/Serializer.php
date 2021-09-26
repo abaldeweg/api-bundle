@@ -31,7 +31,7 @@ class Serializer implements SerializerInterface
         return str_replace('.', '_', $field);
     }
 
-    private function transformValue(?string $type = null, mixed $value = null): mixed
+    private function transformValue(?string $type = null, $value = null): mixed
     {
         if ('timestamp' === $type && $value instanceof \DateTime) {
             $value = $value->getTimestamp();
