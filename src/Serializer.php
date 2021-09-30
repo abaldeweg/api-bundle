@@ -3,6 +3,7 @@
 namespace Baldeweg\Bundle\ApiBundle;
 
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\Exception\UnexpectedTypeException;
 
 class Serializer implements SerializerInterface
 {
@@ -15,12 +16,16 @@ class Serializer implements SerializerInterface
             $item = explode(':', $field);
 
             $property = $this->transformFieldName($item[0]);
-            $value = $this->transformValue(
-                isset($item[1]) ? $item[1] : null,
-                $propertyAccessor->getValue($entity, $item[0])
-            );
+            try {
+                $value = $this->transformValue(
+                    isset($item[1]) ? $item[1] : null,
+                    $propertyAccessor->getValue($entity, $item[0])
+                );
 
-            $object[$property] = $value;
+                $object[$property] = $value;
+            } catch (UnexpectedTypeException $e) {
+                $object[$property] = null;
+            }
         }
 
         return $object;
