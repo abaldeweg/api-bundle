@@ -31,11 +31,11 @@ There is also an abstract controller to give you access to these features within
 use Baldeweg\Bundle\ApiBundle\AbstractApiController;
 
 // Contains the keys of the entity you need
-private $fields = ['id', 'name', 'user.id', 'createdAt:timestamp', 'comments:count'];
+$fields = ['id', 'name', 'user.id', 'createdAt:timestamp', 'comments:count'];
 
 // JSON Response with serialized data
-$this->setResponse()->single($genre); // single entity
-$this->setResponse()->collection($genres); // array of entities
+$this->setResponse()->single($fields, $genre); // single entity
+$this->setResponse()->collection($fields, $genres); // array of entities
 $this->setResponse()->invalid(); // Return message and 400 status code
 $this->setResponse()->deleted(); // Return message and 200 status code
 
