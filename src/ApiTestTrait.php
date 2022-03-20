@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 trait ApiTestTrait
 {
-    protected KernelBrowser $clientAdmin;
+    protected KernelBrowser $client;
 
     public function setUp(): void
     {
@@ -15,9 +15,7 @@ trait ApiTestTrait
 
     protected function request(string $url, ?string $method = 'GET', ?array $params = [], ?array $content = [], int $statusCode = 200)
     {
-        $client = $this->clientAdmin;
-
-        $client->request(
+        $this->client->request(
             $method,
             $url,
             $params,
@@ -28,17 +26,17 @@ trait ApiTestTrait
 
         $this->assertEquals(
             $statusCode,
-            $client->getResponse()->getStatusCode(),
+            $this->client->getResponse()->getStatusCode(),
             'Unexpected HTTP status code for method ' . $method . ' with url ' . $url . '!'
         );
 
-        return json_decode($client->getResponse()->getContent());
+        return json_decode($this->client->getResponse()->getContent());
     }
 
     protected function buildClient(): void
     {
-        $this->clientAdmin = static::createClient();
-        $this->clientAdmin->request(
+        $this->client = static::createClient();
+        $this->client->request(
             'POST',
             '/api/login_check',
             [],
@@ -54,10 +52,10 @@ trait ApiTestTrait
             )
         );
         $data = json_decode(
-            $this->clientAdmin->getResponse()->getContent(),
+            $this->client->getResponse()->getContent(),
             true
         );
-        $this->clientAdmin->setServerParameter(
+        $this->client->setServerParameter(
             'HTTP_Authorization',
             sprintf('Bearer %s', $data['token'])
         );
