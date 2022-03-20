@@ -46,3 +46,16 @@ $this->submitForm($request)
 You can transform the values, just add a transformer after the field name e.g. `comments:count`.
 
 At the moment only count and timestamp are available.
+
+## test Trait
+
+To make XHR requests easier, there is an `ApiTestTrait` trait available for use.
+
+```php
+use \Baldeweg\Bundle\ApiBundle\ApiTestTrait;
+```
+
+## Maker
+
+- make:api:controller - Create a Controller
+- make:api:test - Create a Test
