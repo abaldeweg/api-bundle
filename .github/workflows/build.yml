@@ -28,4 +28,4 @@ jobs:
       - name: Install dependencies
         run: composer update
       - name: Run test suite
-        run: vendor/bin/phpunit --coverage-clover=build/logs/clover.xml
+        run: vendor/bin/phpunit 
