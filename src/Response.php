@@ -6,11 +6,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Response
 {
-    private Serializer $serializer;
-
-    public function __construct(Serializer $serializer)
+    public function __construct(private readonly Serializer $serializer)
     {
-        $this->serializer = $serializer;
     }
 
     public function single(array $fields, $data): JsonResponse

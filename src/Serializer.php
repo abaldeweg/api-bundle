@@ -13,7 +13,7 @@ class Serializer implements SerializerInterface
 
         $object = [];
         foreach ($fields as $field) {
-            $item = explode(':', $field);
+            $item = explode(':', (string) $field);
 
             $property = $this->transformFieldName($item[0]);
             try {
@@ -23,7 +23,7 @@ class Serializer implements SerializerInterface
                 );
 
                 $object[$property] = $value;
-            } catch (UnexpectedTypeException $e) {
+            } catch (UnexpectedTypeException) {
                 $object[$property] = null;
             }
         }
@@ -41,6 +41,7 @@ class Serializer implements SerializerInterface
         if ('timestamp' === $type && $value instanceof \DateTime) {
             $value = $value->getTimestamp();
         }
+
         if ('count' === $type) {
             $value = count($value);
         }
